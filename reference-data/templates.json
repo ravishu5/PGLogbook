@@ -1,0 +1,1780 @@
+{
+  "roleOptions": [
+    {
+      "value": "O",
+      "label": "O – Observed"
+    },
+    {
+      "value": "A",
+      "label": "A – Assisted"
+    },
+    {
+      "value": "PS",
+      "label": "PS – Performed under direct supervision"
+    },
+    {
+      "value": "PI",
+      "label": "PI – Performed independently / indirect supervision"
+    }
+  ],
+  "templates": [
+    {
+      "code": "CLINICAL_CASE",
+      "category": "LOG",
+      "title": "Clinical Case Log",
+      "subtitle": "Ward / OPD / Emergency",
+      "sortOrder": 10,
+      "workflow": "VERIFY",
+      "reviewer": "ASSIGNED",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY"
+      ],
+      "dateField": "date",
+      "titleField": "diagnosis",
+      "subtitleFields": [
+        "setting",
+        "role"
+      ],
+      "targetRules": [
+        {
+          "targetKey": "GENERAL_ADMISSIONS",
+          "when": {
+            "setting": "WARD"
+          }
+        },
+        {
+          "targetKey": "OPD_ENCOUNTERS",
+          "when": {
+            "setting": "OPD"
+          }
+        },
+        {
+          "targetKey": "EMERGENCY_ENCOUNTERS",
+          "when": {
+            "setting": "EMERGENCY"
+          }
+        },
+        {
+          "targetKey": "LONG_CASES",
+          "when": {
+            "presentation": "LONG_CASE"
+          }
+        },
+        {
+          "targetKey": "SHORT_CASES",
+          "when": {
+            "presentation": "SHORT_CASE"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "key": "date",
+          "label": "Date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "case_ref",
+          "label": "Case Number (anonymised)",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter",
+          "help": "Use an anonymised departmental reference only. Never enter patient name, phone or hospital registration number."
+        },
+        {
+          "key": "age_sex",
+          "label": "Age/Sex",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter",
+          "help": "e.g. 3y/M"
+        },
+        {
+          "key": "setting",
+          "label": "Setting",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter",
+          "options": [
+            {
+              "value": "WARD",
+              "label": "Ward admission"
+            },
+            {
+              "value": "OPD",
+              "label": "OPD"
+            },
+            {
+              "value": "EMERGENCY",
+              "label": "Emergency / Casualty"
+            }
+          ]
+        },
+        {
+          "key": "unit",
+          "label": "Unit",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "diagnosis",
+          "label": "Diagnosis",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical"
+        },
+        {
+          "key": "presentation",
+          "label": "Case presentation (optional)",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Clinical",
+          "options": [
+            {
+              "value": "NONE",
+              "label": "Not presented"
+            },
+            {
+              "value": "LONG_CASE",
+              "label": "Long case"
+            },
+            {
+              "value": "SHORT_CASE",
+              "label": "Short case"
+            }
+          ]
+        },
+        {
+          "key": "role",
+          "label": "Role",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical",
+          "optionsSource": "ROLE"
+        },
+        {
+          "key": "key_learning",
+          "label": "Key Learning",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Learning"
+        },
+        {
+          "key": "faculty",
+          "label": "Faculty",
+          "type": "FACULTY",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Learning"
+        },
+        {
+          "key": "competencies",
+          "label": "Linked competencies",
+          "type": "COMPETENCIES",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Learning"
+        },
+        {
+          "key": "faculty_feedback",
+          "label": "Faculty feedback",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": false,
+          "section": "Faculty verification"
+        }
+      ]
+    },
+    {
+      "code": "NEONATAL_CASE",
+      "category": "LOG",
+      "title": "Neonatal Case Log",
+      "subtitle": "NICU / SNCU / Neonatology",
+      "sortOrder": 20,
+      "workflow": "VERIFY",
+      "reviewer": "ASSIGNED",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY"
+      ],
+      "dateField": "date",
+      "titleField": "diagnosis",
+      "subtitleFields": [
+        "ga_bw",
+        "outcome"
+      ],
+      "targetRules": [
+        {
+          "targetKey": "NICU_NEONATES"
+        }
+      ],
+      "fields": [
+        {
+          "key": "date",
+          "label": "Date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "case_ref",
+          "label": "Case Number (anonymised)",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter",
+          "help": "Anonymised reference only. Never enter mother's/baby's name or hospital number."
+        },
+        {
+          "key": "ga_bw",
+          "label": "GA / Birth Weight",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter",
+          "help": "e.g. 32 wk / 1.45 kg"
+        },
+        {
+          "key": "diagnosis",
+          "label": "Diagnosis",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical"
+        },
+        {
+          "key": "respiratory_support",
+          "label": "Respiratory Support",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical",
+          "options": [
+            {
+              "value": "NONE",
+              "label": "None"
+            },
+            {
+              "value": "OXYGEN",
+              "label": "Free-flow / nasal oxygen"
+            },
+            {
+              "value": "HFNC",
+              "label": "HFNC"
+            },
+            {
+              "value": "CPAP",
+              "label": "CPAP / bubble CPAP"
+            },
+            {
+              "value": "NIPPV",
+              "label": "NIPPV"
+            },
+            {
+              "value": "MV",
+              "label": "Mechanical ventilation"
+            },
+            {
+              "value": "HFOV",
+              "label": "HFOV"
+            },
+            {
+              "value": "OTHER",
+              "label": "Other"
+            }
+          ]
+        },
+        {
+          "key": "major_intervention",
+          "label": "Major Intervention",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical"
+        },
+        {
+          "key": "outcome",
+          "label": "Outcome",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical",
+          "options": [
+            {
+              "value": "DISCHARGED",
+              "label": "Discharged"
+            },
+            {
+              "value": "STEPPED_DOWN",
+              "label": "Improved / stepped down"
+            },
+            {
+              "value": "REFERRED",
+              "label": "Referred"
+            },
+            {
+              "value": "LAMA",
+              "label": "LAMA / DAMA"
+            },
+            {
+              "value": "DIED",
+              "label": "Died"
+            },
+            {
+              "value": "ONGOING",
+              "label": "Ongoing care"
+            }
+          ]
+        },
+        {
+          "key": "faculty",
+          "label": "Faculty",
+          "type": "FACULTY",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Learning"
+        },
+        {
+          "key": "competencies",
+          "label": "Linked competencies",
+          "type": "COMPETENCIES",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Learning"
+        },
+        {
+          "key": "faculty_feedback",
+          "label": "Faculty feedback",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": false,
+          "section": "Faculty verification"
+        }
+      ]
+    },
+    {
+      "code": "PICU_CASE",
+      "category": "LOG",
+      "title": "PICU / Critical Care Log",
+      "subtitle": "Pediatric intensive care",
+      "sortOrder": 30,
+      "workflow": "VERIFY",
+      "reviewer": "ASSIGNED",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY"
+      ],
+      "dateField": "date",
+      "titleField": "diagnosis",
+      "subtitleFields": [
+        "severity_pews",
+        "outcome"
+      ],
+      "targetRules": [
+        {
+          "targetKey": "PICU_PATIENTS"
+        }
+      ],
+      "fields": [
+        {
+          "key": "date",
+          "label": "Date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "case_ref",
+          "label": "Case Number (anonymised)",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter",
+          "help": "Anonymised reference only."
+        },
+        {
+          "key": "diagnosis",
+          "label": "Diagnosis",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical"
+        },
+        {
+          "key": "severity_pews",
+          "label": "Severity / PEWS",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical",
+          "help": "e.g. PEWS 6, PRISM, shock index"
+        },
+        {
+          "key": "airway_ventilation",
+          "label": "Airway / Ventilation",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Organ support"
+        },
+        {
+          "key": "circulation_drugs",
+          "label": "Circulation / Drugs",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Organ support"
+        },
+        {
+          "key": "outcome",
+          "label": "Outcome",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Organ support",
+          "options": [
+            {
+              "value": "DISCHARGED_WARD",
+              "label": "Shifted to ward"
+            },
+            {
+              "value": "DISCHARGED",
+              "label": "Discharged"
+            },
+            {
+              "value": "REFERRED",
+              "label": "Referred"
+            },
+            {
+              "value": "LAMA",
+              "label": "LAMA / DAMA"
+            },
+            {
+              "value": "DIED",
+              "label": "Died"
+            },
+            {
+              "value": "ONGOING",
+              "label": "Ongoing care"
+            }
+          ]
+        },
+        {
+          "key": "faculty",
+          "label": "Faculty",
+          "type": "FACULTY",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Learning"
+        },
+        {
+          "key": "competencies",
+          "label": "Linked competencies",
+          "type": "COMPETENCIES",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Learning"
+        },
+        {
+          "key": "faculty_feedback",
+          "label": "Faculty feedback",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": false,
+          "section": "Faculty verification"
+        }
+      ]
+    },
+    {
+      "code": "PROCEDURE",
+      "category": "LOG",
+      "title": "Procedure Log",
+      "subtitle": "Procedures and skills",
+      "sortOrder": 40,
+      "workflow": "VERIFY",
+      "reviewer": "ASSIGNED",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY"
+      ],
+      "dateField": "date",
+      "titleField": "procedure",
+      "subtitleFields": [
+        "role",
+        "case_ref"
+      ],
+      "targetRules": [
+        {
+          "targetFromField": "procedure"
+        }
+      ],
+      "fields": [
+        {
+          "key": "date",
+          "label": "Date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Procedure"
+        },
+        {
+          "key": "procedure",
+          "label": "Procedure",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Procedure",
+          "optionsSource": "PROCEDURE_TARGETS"
+        },
+        {
+          "key": "procedure_other",
+          "label": "Procedure (specify)",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Procedure",
+          "visibleWhen": {
+            "procedure": "OTHER"
+          }
+        },
+        {
+          "key": "case_ref",
+          "label": "Case Number (anonymised)",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Procedure"
+        },
+        {
+          "key": "role",
+          "label": "Role",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Procedure",
+          "optionsSource": "ROLE"
+        },
+        {
+          "key": "complication",
+          "label": "Complication",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Outcome",
+          "help": "Enter 'None' if uncomplicated."
+        },
+        {
+          "key": "learning_reflection",
+          "label": "Learning / Reflection",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Outcome"
+        },
+        {
+          "key": "faculty",
+          "label": "Faculty",
+          "type": "FACULTY",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Outcome"
+        },
+        {
+          "key": "competencies",
+          "label": "Linked competencies",
+          "type": "COMPETENCIES",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Outcome"
+        },
+        {
+          "key": "faculty_feedback",
+          "label": "Faculty feedback",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": false,
+          "section": "Faculty verification"
+        }
+      ]
+    },
+    {
+      "code": "MINI_CEX",
+      "category": "FORM",
+      "title": "Mini-CEX",
+      "subtitle": "Mini Clinical Evaluation Exercise",
+      "sortOrder": 50,
+      "requiredInitial": 6,
+      "workflow": "VERIFY",
+      "reviewer": "ASSESSOR",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY"
+      ],
+      "dateField": "date",
+      "titleField": "patient_problem",
+      "subtitleFields": [
+        "unit"
+      ],
+      "ratingHelp": "1?3: Needs substantial improvement ? 4?6: Borderline / Competent ? 7?9: Clearly competent / Excellent. Use narrative feedback.",
+      "targetRules": [
+        {
+          "targetKey": "MINI_CEX"
+        }
+      ],
+      "fields": [
+        {
+          "key": "date",
+          "label": "Date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "unit",
+          "label": "Unit",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "patient_problem",
+          "label": "Patient Problem",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter",
+          "help": "Clinical problem only – no identifiers."
+        },
+        {
+          "key": "assessor",
+          "label": "Assessor",
+          "type": "FACULTY",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "competencies",
+          "label": "Linked competencies",
+          "type": "COMPETENCIES",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Encounter"
+        },
+        {
+          "key": "history_taking",
+          "label": "History Taking",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "examination",
+          "label": "Examination",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "clinical_reasoning",
+          "label": "Clinical Reasoning",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "communication",
+          "label": "Communication",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "management_plan",
+          "label": "Management Plan",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "professionalism",
+          "label": "Professionalism",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "overall",
+          "label": "Overall Rating",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "strengths",
+          "label": "Strengths",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Narrative feedback"
+        },
+        {
+          "key": "areas_improvement",
+          "label": "Areas for Improvement",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Narrative feedback"
+        },
+        {
+          "key": "action_plan",
+          "label": "Action Plan",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Narrative feedback"
+        },
+        {
+          "key": "remedial_required",
+          "label": "R ? Repeat / remedial action required",
+          "type": "BOOLEAN",
+          "owner": "FACULTY",
+          "required": false,
+          "section": "Narrative feedback"
+        }
+      ]
+    },
+    {
+      "code": "DOPS",
+      "category": "FORM",
+      "title": "DOPS",
+      "subtitle": "Direct Observation of Procedural Skills",
+      "sortOrder": 60,
+      "requiredInitial": 6,
+      "workflow": "VERIFY",
+      "reviewer": "ASSESSOR",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY"
+      ],
+      "dateField": "date",
+      "titleField": "procedure",
+      "subtitleFields": [
+        "unit"
+      ],
+      "ratingHelp": "1?3: Needs substantial improvement ? 4?6: Borderline / Competent ? 7?9: Clearly competent / Excellent. Use narrative feedback.",
+      "targetRules": [
+        {
+          "targetKey": "DOPS"
+        }
+      ],
+      "fields": [
+        {
+          "key": "procedure",
+          "label": "Procedure",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "date",
+          "label": "Date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "unit",
+          "label": "Unit",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "assessor",
+          "label": "Assessor",
+          "type": "FACULTY",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Encounter"
+        },
+        {
+          "key": "competencies",
+          "label": "Linked competencies",
+          "type": "COMPETENCIES",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Encounter"
+        },
+        {
+          "key": "indication_preparation",
+          "label": "Indication / Preparation",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "consent_communication",
+          "label": "Consent & Communication",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "equipment_asepsis",
+          "label": "Equipment / Asepsis",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "technical_performance",
+          "label": "Technical Performance",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "patient_safety",
+          "label": "Patient Safety",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "completion_aftercare",
+          "label": "Completion / Aftercare",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "overall",
+          "label": "Overall Rating",
+          "type": "RATING_9",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Assessor ratings"
+        },
+        {
+          "key": "strengths",
+          "label": "Strengths",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Narrative feedback"
+        },
+        {
+          "key": "errors_omissions",
+          "label": "Errors / Omissions",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Narrative feedback"
+        },
+        {
+          "key": "remedial_plan",
+          "label": "Remedial Plan",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Narrative feedback"
+        },
+        {
+          "key": "remedial_required",
+          "label": "R ? Repeat / remedial action required",
+          "type": "BOOLEAN",
+          "owner": "FACULTY",
+          "required": false,
+          "section": "Narrative feedback"
+        }
+      ]
+    },
+    {
+      "code": "ACADEMIC_ACTIVITY",
+      "category": "FORM",
+      "title": "Seminar / Journal Club / Case Discussion",
+      "subtitle": "Academic activity record",
+      "sortOrder": 70,
+      "workflow": "VERIFY",
+      "reviewer": "ASSIGNED",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY"
+      ],
+      "dateField": "date",
+      "titleField": "topic",
+      "subtitleFields": [
+        "activity_type",
+        "presenter"
+      ],
+      "targetRules": [
+        {
+          "targetKey": "SEMINARS",
+          "when": {
+            "activity_type": "SEMINAR"
+          }
+        },
+        {
+          "targetKey": "JOURNAL_CLUBS",
+          "when": {
+            "activity_type": "JOURNAL_CLUB"
+          }
+        },
+        {
+          "targetKey": "CASE_DISCUSSIONS",
+          "when": {
+            "activity_type": "CASE_DISCUSSION"
+          }
+        },
+        {
+          "targetKey": "AUDITS_MM",
+          "when": {
+            "activity_type": "AUDIT_MM"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "key": "date",
+          "label": "Date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Activity"
+        },
+        {
+          "key": "activity_type",
+          "label": "Activity",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Activity",
+          "options": [
+            {
+              "value": "SEMINAR",
+              "label": "Seminar"
+            },
+            {
+              "value": "JOURNAL_CLUB",
+              "label": "Journal Club"
+            },
+            {
+              "value": "CASE_DISCUSSION",
+              "label": "Case Discussion"
+            },
+            {
+              "value": "AUDIT_MM",
+              "label": "Clinical Audit / M&M"
+            }
+          ]
+        },
+        {
+          "key": "topic",
+          "label": "Topic",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Activity"
+        },
+        {
+          "key": "presenter",
+          "label": "Presenter",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Activity"
+        },
+        {
+          "key": "learning_objectives",
+          "label": "Learning Objectives",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Activity"
+        },
+        {
+          "key": "faculty",
+          "label": "Moderating faculty",
+          "type": "FACULTY",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Activity"
+        },
+        {
+          "key": "competencies",
+          "label": "Linked competencies",
+          "type": "COMPETENCIES",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Activity"
+        },
+        {
+          "key": "faculty_feedback",
+          "label": "Faculty Feedback",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Faculty feedback"
+        }
+      ]
+    },
+    {
+      "code": "DISSERTATION_MILESTONE",
+      "category": "FORM",
+      "title": "Research / Dissertation Tracker",
+      "subtitle": "Milestone-based dissertation progress",
+      "sortOrder": 80,
+      "requiredInitial": 9,
+      "workflow": "VERIFY",
+      "reviewer": "GUIDE",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY"
+      ],
+      "dateField": "planned_date",
+      "titleField": "milestone",
+      "subtitleFields": [
+        "completed"
+      ],
+      "slots": [
+        "Topic Selection",
+        "Protocol",
+        "Ethics Approval",
+        "Data Collection",
+        "Interim Analysis",
+        "Statistics",
+        "Manuscript",
+        "Dissertation Submission",
+        "Conference / Poster / Paper"
+      ],
+      "targetRules": [],
+      "fields": [
+        {
+          "key": "milestone",
+          "label": "Milestone",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "readOnly": true,
+          "section": "Milestone"
+        },
+        {
+          "key": "planned_date",
+          "label": "Planned Date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Milestone"
+        },
+        {
+          "key": "completed",
+          "label": "Completed",
+          "type": "BOOLEAN",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Milestone"
+        },
+        {
+          "key": "completed_date",
+          "label": "Completion date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Milestone",
+          "visibleWhen": {
+            "completed": "true"
+          }
+        },
+        {
+          "key": "evidence",
+          "label": "Evidence",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Evidence",
+          "help": "Describe the evidence (e.g. IEC approval reference). Upload supporting files below."
+        },
+        {
+          "key": "evidence_files",
+          "label": "Evidence files",
+          "type": "ATTACHMENT",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Evidence"
+        },
+        {
+          "key": "guide_feedback",
+          "label": "Guide Feedback",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Guide review"
+        }
+      ]
+    },
+    {
+      "code": "TEACHING",
+      "category": "FORM",
+      "title": "Teaching Competency Record",
+      "subtitle": "UG / intern / nursing teaching",
+      "sortOrder": 90,
+      "workflow": "VERIFY",
+      "reviewer": "ASSIGNED",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY"
+      ],
+      "dateField": "date",
+      "titleField": "topic",
+      "subtitleFields": [
+        "learner",
+        "method"
+      ],
+      "targetRules": [
+        {
+          "targetKey": "UG_TEACHING",
+          "when": {
+            "learner": "UG"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "key": "date",
+          "label": "Date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Session"
+        },
+        {
+          "key": "learner",
+          "label": "Learner",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Session",
+          "options": [
+            {
+              "value": "UG",
+              "label": "UG students"
+            },
+            {
+              "value": "INTERN",
+              "label": "Interns"
+            },
+            {
+              "value": "NURSING",
+              "label": "Nursing staff"
+            },
+            {
+              "value": "PG",
+              "label": "Junior PGs"
+            },
+            {
+              "value": "OTHER",
+              "label": "Other"
+            }
+          ]
+        },
+        {
+          "key": "topic",
+          "label": "Topic",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Session"
+        },
+        {
+          "key": "method",
+          "label": "Method",
+          "type": "SELECT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Session",
+          "options": [
+            {
+              "value": "LECTURE",
+              "label": "Lecture / didactic"
+            },
+            {
+              "value": "BEDSIDE",
+              "label": "Bedside clinic"
+            },
+            {
+              "value": "SMALL_GROUP",
+              "label": "Small group / tutorial"
+            },
+            {
+              "value": "SKILLS",
+              "label": "Skills demonstration / simulation"
+            },
+            {
+              "value": "CASE_BASED",
+              "label": "Case-based learning"
+            },
+            {
+              "value": "OTHER",
+              "label": "Other"
+            }
+          ]
+        },
+        {
+          "key": "observed_by",
+          "label": "Observed By Faculty",
+          "type": "FACULTY",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Session"
+        },
+        {
+          "key": "competencies",
+          "label": "Linked competencies",
+          "type": "COMPETENCIES",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Session"
+        },
+        {
+          "key": "feedback",
+          "label": "Feedback",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Faculty feedback"
+        }
+      ]
+    },
+    {
+      "code": "REFLECTION",
+      "category": "REFLECTION",
+      "title": "Critical Incident / Reflection",
+      "subtitle": "Mandatory reflective practice",
+      "sortOrder": 100,
+      "workflow": "VERIFY",
+      "reviewer": "ASSIGNED",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY"
+      ],
+      "dateField": "date",
+      "titleField": "clinical_situation",
+      "subtitleFields": [],
+      "notice": "Reflections must not contain any identifiable patient information (names, hospital numbers, photographs, addresses or contact details).",
+      "targetRules": [],
+      "fields": [
+        {
+          "key": "date",
+          "label": "Date",
+          "type": "DATE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Incident"
+        },
+        {
+          "key": "clinical_situation",
+          "label": "Clinical Situation",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Incident"
+        },
+        {
+          "key": "what_happened",
+          "label": "What Happened",
+          "type": "WORDS",
+          "owner": "STUDENT",
+          "required": true,
+          "minWords": 50,
+          "maxWords": 200,
+          "section": "Reflection"
+        },
+        {
+          "key": "what_learned",
+          "label": "What I Learned",
+          "type": "WORDS",
+          "owner": "STUDENT",
+          "required": true,
+          "minWords": 50,
+          "maxWords": 200,
+          "section": "Reflection"
+        },
+        {
+          "key": "do_differently",
+          "label": "What I Will Do Differently",
+          "type": "WORDS",
+          "owner": "STUDENT",
+          "required": true,
+          "minWords": 50,
+          "maxWords": 200,
+          "section": "Reflection"
+        },
+        {
+          "key": "faculty_feedback",
+          "label": "Faculty Feedback",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Faculty feedback"
+        }
+      ]
+    },
+    {
+      "code": "MONTHLY",
+      "category": "MONTHLY",
+      "title": "Monthly Assessment",
+      "subtitle": "36-month programme assessment",
+      "sortOrder": 110,
+      "periodCount": 36,
+      "workflow": "MONTHLY",
+      "reviewer": "ASSIGNED",
+      "signatures": [
+        "RESIDENT",
+        "FACULTY",
+        "HOD"
+      ],
+      "titleField": "posting_unit",
+      "subtitleFields": [
+        "self_assessment"
+      ],
+      "ratingHelp": "B ? Below expectations ? M ? Meets expectations ? E ? Exceeds expectations ? R ? Repeat / remedial action required",
+      "targetRules": [],
+      "fields": [
+        {
+          "key": "posting_unit",
+          "label": "Posting / Unit",
+          "type": "TEXT",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Posting"
+        },
+        {
+          "key": "attendance",
+          "label": "Attendance / Duty Participation",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Posting"
+        },
+        {
+          "key": "admissions_opd_emergency",
+          "label": "Admissions / OPD / Emergency",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical work"
+        },
+        {
+          "key": "major_cases",
+          "label": "Major Cases / Competencies Achieved",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical work"
+        },
+        {
+          "key": "procedures_completed",
+          "label": "Procedures Completed",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical work"
+        },
+        {
+          "key": "nicu_picu_exposure",
+          "label": "NICU/PICU Exposure",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Clinical work"
+        },
+        {
+          "key": "academic_activities",
+          "label": "Academic Activities",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Academics"
+        },
+        {
+          "key": "research_progress",
+          "label": "Research / Dissertation Progress",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Academics"
+        },
+        {
+          "key": "teaching_activity",
+          "label": "Teaching Activity",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Academics"
+        },
+        {
+          "key": "communication_professionalism",
+          "label": "Communication / Professionalism",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Professional development"
+        },
+        {
+          "key": "critical_incident",
+          "label": "Critical Incident / Reflection",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Professional development"
+        },
+        {
+          "key": "self_assessment",
+          "label": "Self-Assessment (B/M/E)",
+          "type": "BME",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Self-assessment"
+        },
+        {
+          "key": "strengths",
+          "label": "Strengths",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Self-assessment"
+        },
+        {
+          "key": "areas_improvement",
+          "label": "Areas Needing Improvement",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Self-assessment"
+        },
+        {
+          "key": "action_plan",
+          "label": "Action Plan for Next Month",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": true,
+          "section": "Self-assessment"
+        },
+        {
+          "key": "faculty_assessment",
+          "label": "Faculty Assessment (B/M/E)",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "section": "Unit faculty assessment"
+        },
+        {
+          "key": "faculty_comments",
+          "label": "Faculty comments",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": false,
+          "section": "Unit faculty assessment"
+        },
+        {
+          "key": "remedial_required",
+          "label": "R ? Repeat / remedial action required",
+          "type": "BOOLEAN",
+          "owner": "FACULTY",
+          "required": false,
+          "section": "Unit faculty assessment"
+        },
+        {
+          "key": "hod_review",
+          "label": "HOD / Mentor Review",
+          "type": "MULTILINE",
+          "owner": "HOD",
+          "required": true,
+          "section": "HOD / mentor review"
+        }
+      ],
+      "guidanceSource": "ROTATION_PLAN.monthlyPriorities"
+    },
+    {
+      "code": "ANNUAL_REVIEW",
+      "category": "ANNUAL",
+      "title": "Annual Comprehensive Review",
+      "subtitle": "Faculty-only annual assessment",
+      "sortOrder": 120,
+      "periodCount": 3,
+      "workflow": "ANNUAL",
+      "reviewer": "ASSIGNED",
+      "signatures": [
+        "FACULTY"
+      ],
+      "ratingHelp": "B – Below Expectations · M – Meets Expectations · E – Exceeds Expectations",
+      "domains": [
+        {
+          "key": "clinical_knowledge",
+          "label": "Clinical Knowledge"
+        },
+        {
+          "key": "clinical_examination",
+          "label": "Clinical Examination"
+        },
+        {
+          "key": "emergency_critical_care",
+          "label": "Emergency / Critical Care"
+        },
+        {
+          "key": "procedural_skills",
+          "label": "Procedural Skills"
+        },
+        {
+          "key": "neonatal_care",
+          "label": "Neonatal Care"
+        },
+        {
+          "key": "communication_counselling",
+          "label": "Communication / Counselling"
+        },
+        {
+          "key": "professionalism_ethics",
+          "label": "Professionalism / Ethics"
+        },
+        {
+          "key": "research",
+          "label": "Research"
+        },
+        {
+          "key": "teaching",
+          "label": "Teaching"
+        },
+        {
+          "key": "overall_progression",
+          "label": "Overall Progression"
+        }
+      ],
+      "targetRules": [],
+      "fields": [
+        {
+          "key": "clinical_knowledge_rating",
+          "label": "Clinical Knowledge – Rating",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "clinical_knowledge",
+          "section": "Clinical Knowledge"
+        },
+        {
+          "key": "clinical_knowledge_comments",
+          "label": "Comments / Evidence",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "clinical_knowledge",
+          "section": "Clinical Knowledge"
+        },
+        {
+          "key": "clinical_examination_rating",
+          "label": "Clinical Examination – Rating",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "clinical_examination",
+          "section": "Clinical Examination"
+        },
+        {
+          "key": "clinical_examination_comments",
+          "label": "Comments / Evidence",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "clinical_examination",
+          "section": "Clinical Examination"
+        },
+        {
+          "key": "emergency_critical_care_rating",
+          "label": "Emergency / Critical Care – Rating",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "emergency_critical_care",
+          "section": "Emergency / Critical Care"
+        },
+        {
+          "key": "emergency_critical_care_comments",
+          "label": "Comments / Evidence",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "emergency_critical_care",
+          "section": "Emergency / Critical Care"
+        },
+        {
+          "key": "procedural_skills_rating",
+          "label": "Procedural Skills – Rating",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "procedural_skills",
+          "section": "Procedural Skills"
+        },
+        {
+          "key": "procedural_skills_comments",
+          "label": "Comments / Evidence",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "procedural_skills",
+          "section": "Procedural Skills"
+        },
+        {
+          "key": "neonatal_care_rating",
+          "label": "Neonatal Care – Rating",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "neonatal_care",
+          "section": "Neonatal Care"
+        },
+        {
+          "key": "neonatal_care_comments",
+          "label": "Comments / Evidence",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "neonatal_care",
+          "section": "Neonatal Care"
+        },
+        {
+          "key": "communication_counselling_rating",
+          "label": "Communication / Counselling – Rating",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "communication_counselling",
+          "section": "Communication / Counselling"
+        },
+        {
+          "key": "communication_counselling_comments",
+          "label": "Comments / Evidence",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "communication_counselling",
+          "section": "Communication / Counselling"
+        },
+        {
+          "key": "professionalism_ethics_rating",
+          "label": "Professionalism / Ethics – Rating",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "professionalism_ethics",
+          "section": "Professionalism / Ethics"
+        },
+        {
+          "key": "professionalism_ethics_comments",
+          "label": "Comments / Evidence",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "professionalism_ethics",
+          "section": "Professionalism / Ethics"
+        },
+        {
+          "key": "research_rating",
+          "label": "Research – Rating",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "research",
+          "section": "Research"
+        },
+        {
+          "key": "research_comments",
+          "label": "Comments / Evidence",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "research",
+          "section": "Research"
+        },
+        {
+          "key": "teaching_rating",
+          "label": "Teaching – Rating",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "teaching",
+          "section": "Teaching"
+        },
+        {
+          "key": "teaching_comments",
+          "label": "Comments / Evidence",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "teaching",
+          "section": "Teaching"
+        },
+        {
+          "key": "overall_progression_rating",
+          "label": "Overall Progression – Rating",
+          "type": "BME",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "overall_progression",
+          "section": "Overall Progression"
+        },
+        {
+          "key": "overall_progression_comments",
+          "label": "Comments / Evidence",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": true,
+          "group": "overall_progression",
+          "section": "Overall Progression"
+        },
+        {
+          "key": "narrative_feedback",
+          "label": "Narrative feedback",
+          "type": "MULTILINE",
+          "owner": "FACULTY",
+          "required": false,
+          "section": "Narrative"
+        }
+      ]
+    }
+  ]
+}

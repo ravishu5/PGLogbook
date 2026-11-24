@@ -1,0 +1,28 @@
+{
+  "note": "Competency codes below are organized as an institutional mapping/index rather than reproducing the copyrighted curriculum verbatim. The department should cross-check the latest NMC curriculum and university regulations before final adoption.",
+  "expectedProgression": "PS → PI (performance under direct supervision progressing to independent performance / indirect supervision)",
+  "competencies": [
+    { "code": "PG-PED-01", "title": "Comprehensive pediatric history and examination", "domain": "Core clinical", "progression": "PS ? PI" },
+    { "code": "PG-PED-02", "title": "Newborn examination and gestational age assessment", "domain": "Neonatology", "progression": "PS ? PI" },
+    { "code": "PG-PED-03", "title": "Growth, nutrition and anthropometry assessment", "domain": "Preventive/Nutrition", "progression": "PS ? PI" },
+    { "code": "PG-PED-04", "title": "Developmental and behavioral assessment", "domain": "Development", "progression": "PS ? PI" },
+    { "code": "PG-PED-05", "title": "Assessment and stabilization of sick child", "domain": "Emergency", "progression": "PS ? PI" },
+    { "code": "PG-PED-06", "title": "Pediatric airway, breathing and circulation", "domain": "Emergency", "progression": "PS ? PI" },
+    { "code": "PG-PED-07", "title": "Pediatric/neonatal resuscitation", "domain": "Emergency/Neonatology", "progression": "PS ? PI" },
+    { "code": "PG-PED-08", "title": "Fluid, electrolyte and acid-base management", "domain": "Core/PICU", "progression": "PS ? PI" },
+    { "code": "PG-PED-09", "title": "Sepsis and septic shock management", "domain": "PICU/Emergency", "progression": "PS ? PI" },
+    { "code": "PG-PED-10", "title": "Respiratory distress and ventilatory support", "domain": "PICU/NICU", "progression": "PS ? PI" },
+    { "code": "PG-PED-11", "title": "Neurologic emergencies and seizures", "domain": "Emergency/Neurology", "progression": "PS ? PI" },
+    { "code": "PG-PED-12", "title": "Nutrition rehabilitation and SAM", "domain": "Nutrition", "progression": "PS ? PI" },
+    { "code": "PG-PED-13", "title": "Immunization and preventive pediatrics", "domain": "OPD/Community", "progression": "PS ? PI" },
+    { "code": "PG-PED-14", "title": "Common pediatric infections and rational antimicrobials", "domain": "Ward/OPD", "progression": "PS ? PI" },
+    { "code": "PG-PED-15", "title": "Neonatal jaundice, sepsis, respiratory disorders", "domain": "Neonatology", "progression": "PS ? PI" },
+    { "code": "PG-PED-16", "title": "Common cardiac, renal, endocrine and hematologic disorders", "domain": "Subspecialty", "progression": "PS ? PI" },
+    { "code": "PG-PED-17", "title": "Poisoning, bites and acute toxicology", "domain": "Emergency", "progression": "PS ? PI" },
+    { "code": "PG-PED-18", "title": "Child protection, ethics and safeguarding", "domain": "Professionalism", "progression": "PS ? PI" },
+    { "code": "PG-PED-19", "title": "Communication, counselling and shared decisions", "domain": "AETCOM", "progression": "PS ? PI" },
+    { "code": "PG-PED-20", "title": "Critical appraisal, research methodology and statistics", "domain": "Research", "progression": "PS ? PI" },
+    { "code": "PG-PED-21", "title": "Teaching UG/intern/nursing staff", "domain": "Education", "progression": "PS ? PI" },
+    { "code": "PG-PED-22", "title": "Clinical audit, quality improvement and patient safety", "domain": "QI", "progression": "PS ? PI" }
+  ]
+}

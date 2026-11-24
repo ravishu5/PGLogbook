@@ -1,0 +1,41 @@
+{
+  "disclaimer": "These are suggested departmental training targets, not claimed NMC-mandated numbers. Adjust to patient volume, simulation availability, university rules and documented competence.",
+  "exposure": [
+    { "key": "GENERAL_ADMISSIONS", "label": "General pediatric admissions", "target": 300, "distribution": "Suggested cumulative exposure", "documentation": "Record diagnosis + outcome" },
+    { "key": "OPD_ENCOUNTERS", "label": "OPD encounters", "target": 1000, "distribution": "Suggested cumulative exposure", "documentation": "Common + specialty cases" },
+    { "key": "EMERGENCY_ENCOUNTERS", "label": "Emergency encounters", "target": 300, "distribution": "Suggested cumulative exposure", "documentation": "Acute illness/resuscitation" },
+    { "key": "NICU_NEONATES", "label": "NICU/SNCU neonates", "target": 100, "distribution": "Suggested cumulative exposure", "documentation": "Include varied neonatal problems" },
+    { "key": "PICU_PATIENTS", "label": "PICU patients", "target": 75, "distribution": "Suggested cumulative exposure", "documentation": "Include shock/respiratory/neurologic cases" },
+    { "key": "LONG_CASES", "label": "Long cases", "target": 30, "distribution": "10/year suggested", "documentation": "Faculty-presented" },
+    { "key": "SHORT_CASES", "label": "Short cases", "target": 60, "distribution": "20/year suggested", "documentation": "Faculty-presented" },
+    { "key": "CASE_DISCUSSIONS", "label": "Case-based discussions", "target": 36, "distribution": "1/month", "documentation": "Document feedback" },
+    { "key": "MINI_CEX", "label": "Mini-CEX", "target": 18, "distribution": "6/year", "documentation": "Repeat/remedial as needed" },
+    { "key": "DOPS", "label": "DOPS", "target": 18, "distribution": "6/year", "documentation": "Core procedures" },
+    { "key": "JOURNAL_CLUBS", "label": "Journal clubs", "target": 18, "distribution": "6/year", "documentation": "Critical appraisal" },
+    { "key": "SEMINARS", "label": "Seminars", "target": 18, "distribution": "6/year", "documentation": "Faculty feedback" },
+    { "key": "AUDITS_MM", "label": "Clinical audits/M&M", "target": 6, "distribution": "2/year", "documentation": "Document learning points" },
+    { "key": "UG_TEACHING", "label": "UG teaching sessions", "target": 12, "distribution": "?4/year", "documentation": "Faculty-observed" }
+  ],
+  "procedures": [
+    { "key": "PROC_NEONATAL_RESUSCITATION", "label": "Neonatal resuscitation", "target": 20, "levelRemarks": "Observe/assist/perform; competence-based" },
+    { "key": "PROC_BAG_MASK", "label": "Bag-mask ventilation", "target": 20, "levelRemarks": "PS?PI" },
+    { "key": "PROC_INTUBATION", "label": "Endotracheal intubation", "target": 10, "levelRemarks": "Supervised; actual opportunity dependent" },
+    { "key": "PROC_IV_CANNULATION", "label": "Peripheral IV cannulation", "target": 50, "levelRemarks": "PS?PI" },
+    { "key": "PROC_BLOOD_SAMPLING", "label": "Blood sampling", "target": 50, "levelRemarks": "PS?PI" },
+    { "key": "PROC_LUMBAR_PUNCTURE", "label": "Lumbar puncture", "target": 10, "levelRemarks": "PS; competence-based" },
+    { "key": "PROC_NG_OG_TUBE", "label": "NG/OG tube insertion", "target": 20, "levelRemarks": "PS?PI" },
+    { "key": "PROC_URINARY_CATHETER", "label": "Urinary catheterization", "target": 10, "levelRemarks": "PS" },
+    { "key": "PROC_INTRAOSSEOUS", "label": "Intraosseous access", "target": 5, "levelRemarks": "Simulation/clinical" },
+    { "key": "PROC_BLOOD_GAS", "label": "Arterial/venous blood gas sampling", "target": 20, "levelRemarks": "PS?PI" },
+    { "key": "PROC_PLEURAL", "label": "Pleural procedure/chest drain", "target": 5, "levelRemarks": "Assist/simulation where applicable" },
+    { "key": "PROC_BONE_MARROW", "label": "Bone marrow aspiration", "target": 5, "levelRemarks": "PS" },
+    { "key": "PROC_PHOTOTHERAPY_EXCHANGE", "label": "Phototherapy/exchange transfusion management", "target": 10, "levelRemarks": "Cases managed" },
+    { "key": "PROC_KMC", "label": "KMC initiation/counselling", "target": 20, "levelRemarks": "PS?PI" },
+    { "key": "PROC_BREASTFEEDING", "label": "Breastfeeding counselling", "target": 30, "levelRemarks": "PS?PI" },
+    { "key": "PROC_ANTHROPOMETRY", "label": "Anthropometry + growth chart", "target": 50, "levelRemarks": "PS?PI" },
+    { "key": "PROC_DEVELOPMENTAL", "label": "Developmental assessment", "target": 30, "levelRemarks": "PS?PI" },
+    { "key": "PROC_PEDIATRIC_CPR", "label": "Pediatric CPR", "target": 10, "levelRemarks": "Simulation/clinical" },
+    { "key": "PROC_VENTILATOR", "label": "Ventilator initiation/monitoring", "target": 25, "levelRemarks": "PICU/NICU" },
+    { "key": "PROC_VASOACTIVE", "label": "Vasoactive infusion calculation/management", "target": 20, "levelRemarks": "PICU" }
+  ]
+}

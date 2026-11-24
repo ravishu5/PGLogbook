@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PG Logbook</string>
+    <string name="app_full_name">MD Pediatrics PG Logbook</string>
+    <string name="notification_channel_name">Logbook updates</string>
+    <string name="notification_channel_description">Review requests, approvals, returns and reminders</string>
+</resources>

@@ -1,0 +1,292 @@
+{
+  "documents": [
+    {
+      "code": "LOGBOOK_GUIDE",
+      "title": "Basis and Use of this Logbook",
+      "description": "Purpose of the logbook, rating scale and resident responsibilities.",
+      "sortOrder": 0,
+      "content": {
+        "type": "GUIDE",
+        "sections": [
+          {
+            "heading": "Basis and use",
+            "paragraphs": [
+              "This logbook is based on the NMC revised competency-based postgraduate MD Paediatrics curriculum. The curriculum describes outcome-based competencies across newborn-to-adolescent care, ambulatory and inpatient care, healthy/ill child care, prevention, family-centred care, emergency care and intensive care.",
+              "NMC guidance requires real-time documentation of postings, work done in wards/OPDs/casualty and other areas, procedures assisted/performed and teaching sessions; the logbook is used for periodic faculty assessment, feedback and internal evaluation.",
+              "Suggested case/procedure numbers are training targets and should be adapted to the current university/NMC requirements, institutional workload and available facilities."
+            ]
+          },
+          {
+            "heading": "Rating scale",
+            "table": [
+              [
+                "O",
+                "Observed"
+              ],
+              [
+                "A",
+                "Assisted"
+              ],
+              [
+                "PS",
+                "Performed under direct supervision"
+              ],
+              [
+                "PI",
+                "Performed independently / indirect supervision"
+              ],
+              [
+                "B",
+                "Below expectations"
+              ],
+              [
+                "M",
+                "Meets expectations"
+              ],
+              [
+                "E",
+                "Exceeds expectations"
+              ],
+              [
+                "R",
+                "Repeat / remedial action required"
+              ]
+            ]
+          },
+          {
+            "heading": "Resident responsibilities",
+            "bullets": [
+              "Enter activities in real time.",
+              "Obtain faculty verification regularly.",
+              "Record reflections for significant/critical incidents.",
+              "Maintain confidentiality; do not enter patient names.",
+              "Bring logbook for monthly and quarterly reviews.",
+              "Complete required research, teaching and academic activities."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "code": "ROTATION_PLAN",
+      "title": "Three-Year Rotation Plan",
+      "description": "Year-wise rotation framework and the suggested monthly distribution of key activities (Appendix).",
+      "sortOrder": 1,
+      "content": {
+        "type": "ROTATION_PLAN",
+        "rows": [
+          {
+            "year": "PGY-1",
+            "area": "General Pediatric Ward",
+            "duration": "12–16 weeks",
+            "focus": "Core inpatient pediatrics"
+          },
+          {
+            "year": "PGY-1",
+            "area": "OPD / Ambulatory Pediatrics",
+            "duration": "6–8 weeks",
+            "focus": "Well-child + common pediatric disorders"
+          },
+          {
+            "year": "PGY-1",
+            "area": "Emergency / Casualty",
+            "duration": "4–6 weeks",
+            "focus": "Triage, resuscitation, acute care"
+          },
+          {
+            "year": "PGY-1",
+            "area": "NICU/SNCU/Neonatology",
+            "duration": "6–8 weeks",
+            "focus": "Newborn and neonatal care"
+          },
+          {
+            "year": "PGY-1",
+            "area": "PICU",
+            "duration": "4 weeks",
+            "focus": "Basic critical care"
+          },
+          {
+            "year": "PGY-2",
+            "area": "General Ward + OPD",
+            "duration": "8–10 weeks",
+            "focus": "Increasing independence"
+          },
+          {
+            "year": "PGY-2",
+            "area": "NICU/Neonatology",
+            "duration": "6–8 weeks",
+            "focus": "Advanced neonatal care"
+          },
+          {
+            "year": "PGY-2",
+            "area": "PICU",
+            "duration": "6–8 weeks",
+            "focus": "Ventilation, shock, organ support"
+          },
+          {
+            "year": "PGY-2",
+            "area": "Subspecialties",
+            "duration": "8–12 weeks",
+            "focus": "Cardiology/neurology/nephrology etc."
+          },
+          {
+            "year": "PGY-2",
+            "area": "Emergency",
+            "duration": "2–4 weeks",
+            "focus": "High-acuity exposure"
+          },
+          {
+            "year": "PGY-3",
+            "area": "Ward/OPD",
+            "duration": "8–10 weeks",
+            "focus": "Independent decision-making"
+          },
+          {
+            "year": "PGY-3",
+            "area": "PICU/NICU",
+            "duration": "6–8 weeks",
+            "focus": "Advanced critical care"
+          },
+          {
+            "year": "PGY-3",
+            "area": "Subspecialty/Elective",
+            "duration": "6–8 weeks",
+            "focus": "Focused advanced exposure"
+          },
+          {
+            "year": "PGY-3",
+            "area": "Community / Outreach",
+            "duration": "2–4 weeks",
+            "focus": "Preventive/community pediatrics"
+          },
+          {
+            "year": "PGY-3",
+            "area": "Teaching / Academic / Research",
+            "duration": "Longitudinal",
+            "focus": "UG teaching + dissertation"
+          }
+        ],
+        "notes": [
+          "*Suggested institutional framework; modify to local university/NMC-approved rotation schedule."
+        ],
+        "monthlyPriorities": [
+          {
+            "year": "PGY-1",
+            "fromMonth": 1,
+            "toMonth": 3,
+            "priority": "Orientation, history/examination, ward/OPD, newborn examination, anthropometry, basic procedures"
+          },
+          {
+            "year": "PGY-1",
+            "fromMonth": 4,
+            "toMonth": 6,
+            "priority": "Neonatology/SNCU, emergency, resuscitation, nutrition, common infections"
+          },
+          {
+            "year": "PGY-1",
+            "fromMonth": 7,
+            "toMonth": 9,
+            "priority": "PICU basics, respiratory/neurologic emergencies, fluid/electrolytes"
+          },
+          {
+            "year": "PGY-1",
+            "fromMonth": 10,
+            "toMonth": 12,
+            "priority": "Consolidation + first annual competency review"
+          },
+          {
+            "year": "PGY-2",
+            "fromMonth": 13,
+            "toMonth": 18,
+            "priority": "Advanced ward/NICU/PICU, subspecialty exposure, research/data collection"
+          },
+          {
+            "year": "PGY-2",
+            "fromMonth": 19,
+            "toMonth": 24,
+            "priority": "Critical care, procedures, advanced case management, teaching"
+          },
+          {
+            "year": "PGY-3",
+            "fromMonth": 25,
+            "toMonth": 30,
+            "priority": "Independent clinical decision-making, subspecialty/elective, teaching"
+          },
+          {
+            "year": "PGY-3",
+            "fromMonth": 31,
+            "toMonth": 34,
+            "priority": "Research completion, audit, advanced competencies, exam preparation"
+          },
+          {
+            "year": "PGY-3",
+            "fromMonth": 35,
+            "toMonth": 36,
+            "priority": "Final consolidation, competency sign-off, dissertation and exit assessment"
+          }
+        ]
+      }
+    },
+    {
+      "code": "COMPETENCY_INDEX",
+      "title": "Competency Master Index",
+      "description": "The 22 institutional competencies used across logs, assessments and final sign-off.",
+      "sortOrder": 2,
+      "content": {
+        "type": "COMPETENCY_INDEX",
+        "notes": [
+          "Important: competency codes are organized as an institutional mapping/index rather than reproducing the copyrighted curriculum verbatim. The department should cross-check the latest NMC curriculum and university regulations before final adoption.",
+          "Expected progression for every competency is PS ? PI."
+        ]
+      }
+    },
+    {
+      "code": "EXPOSURE_TARGETS",
+      "title": "Suggested Minimum Clinical Exposure Targets",
+      "description": "Suggested cumulative exposure targets over the three-year programme.",
+      "sortOrder": 3,
+      "content": {
+        "type": "TARGETS",
+        "category": "EXPOSURE",
+        "distribution": [
+          "Mini-CEX and DOPS: about six of each per year (18 each over three years).",
+          "Journal clubs and seminars: about six of each per year.",
+          "Case-based discussions: about one per month (36 over three years).",
+          "Clinical audits / M&M: about two per year.",
+          "UG teaching sessions: about four per year.",
+          "Admissions, OPD and emergency encounters accumulate across postings in proportion to the rotation plan."
+        ],
+        "guidance": [
+          "Record every encounter in the appropriate log on the day it occurs, using anonymised case references only.",
+          "Submit entries for faculty verification promptly; officially reviewed progress counts faculty-verified entries only.",
+          "Link each entry to the relevant competency codes where applicable so that competency progression can be reviewed.",
+          "Progress figures in the app are calculated automatically from your stored records; they cannot be entered manually."
+        ],
+        "notes": [
+          "These are suggested departmental training targets, not claimed NMC-mandated numbers. Adjust to patient volume, simulation availability, university rules and documented competence."
+        ]
+      }
+    },
+    {
+      "code": "PROCEDURE_TARGETS",
+      "title": "Suggested Procedure Targets",
+      "description": "Suggested cumulative procedure and skill targets over the three-year programme.",
+      "sortOrder": 4,
+      "content": {
+        "type": "TARGETS",
+        "category": "PROCEDURE",
+        "distribution": [
+          "Progress from observing (O) and assisting (A) in PGY-1 towards supervised (PS) and independent (PI) performance by PGY-3."
+        ],
+        "guidance": [
+          "Log every procedure with your role (O/A/PS/PI), any complication and your reflection.",
+          "Each procedure log entry counts once towards the matching procedure target.",
+          "Use DOPS for formal direct observation of key procedures."
+        ],
+        "notes": [
+          "These are suggested departmental training targets, not claimed NMC-mandated numbers. Adjust to patient volume, simulation availability, university rules and documented competence."
+        ]
+      }
+    }
+  ]
+}
