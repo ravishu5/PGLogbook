@@ -90,16 +90,19 @@ fun RichTextInput(
     fun handleWrapSelection(prefix: String, suffix: String, defaultPlaceholder: String) {
         val current = tfv.text
         val sel = tfv.selection
-        if (!sel.collapsed) {
-            val selected = current.substring(sel.min, sel.max)
+        val safeMin = sel.min.coerceIn(0, current.length)
+        val safeMax = sel.max.coerceIn(0, current.length)
+        if (!sel.collapsed && safeMin < safeMax) {
+            val selected = current.substring(safeMin, safeMax)
             val wrapped = "$prefix$selected$suffix"
-            val newText = current.replaceRange(sel.min, sel.max, wrapped)
-            val newCursor = sel.min + wrapped.length
+            val newText = current.replaceRange(safeMin, safeMax, wrapped)
+            val newCursor = safeMin + wrapped.length
             updateTextAndSelection(newText, newCursor)
         } else {
+            val safeStart = sel.start.coerceIn(0, current.length)
             val wrapped = "$prefix$defaultPlaceholder$suffix"
-            val newText = current.replaceRange(sel.start, sel.start, wrapped)
-            val newCursor = sel.start + prefix.length + defaultPlaceholder.length
+            val newText = current.replaceRange(safeStart, safeStart, wrapped)
+            val newCursor = safeStart + prefix.length + defaultPlaceholder.length
             updateTextAndSelection(newText, newCursor)
         }
     }
@@ -107,9 +110,19 @@ fun RichTextInput(
     fun handleInsertText(insert: String) {
         val current = tfv.text
         val sel = tfv.selection
-        val newText = current.replaceRange(sel.min, sel.max, insert)
-        val newCursor = sel.min + insert.length
+        val safeMin = sel.min.coerceIn(0, current.length)
+        val safeMax = sel.max.coerceIn(0, current.length)
+        val newText = current.replaceRange(safeMin, safeMax, insert)
+        val newCursor = safeMin + insert.length
         updateTextAndSelection(newText, newCursor)
+    }
+
+    fun handleInsertTableRow() {
+        val current = tfv.text
+        val tableLines = current.lines().filter { it.trim().startsWith("|") && !it.contains("---") }
+        val cols = tableLines.firstOrNull()?.split("|")?.drop(1)?.dropLast(1)?.size?.coerceIn(1, 8) ?: 3
+        val newRow = "\n| " + (1..cols).joinToString(" | ") { "" } + " |"
+        handleInsertText(newRow)
     }
 
     val borderColor = when {
@@ -212,6 +225,7 @@ fun RichTextInput(
                         onClearAll = { updateTextAndSelection("", 0) },
                         isPreviewMode = isPreviewMode,
                         onTogglePreview = { isPreviewMode = !isPreviewMode },
+                        onInsertTableRow = { handleInsertTableRow() },
                     )
                 }
             }

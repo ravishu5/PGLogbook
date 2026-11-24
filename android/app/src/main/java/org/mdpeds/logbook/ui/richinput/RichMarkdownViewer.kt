@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -167,10 +168,9 @@ fun parseMarkdownBlocks(rawText: String): List<MarkdownBlock> {
                 i++
             }
             // Markdown Table: starts with | and next line has | and ---
-            trimmed.startsWith("|") && trimmed.endsWith("|") && i + 1 < lines.size &&
+            trimmed.startsWith("|") && i + 1 < lines.size &&
                 lines[i + 1].trim().startsWith("|") && lines[i + 1].contains("---") -> {
-                val headerCells = trimmed.split("|")
-                    .drop(1).dropLast(1)
+                val headerCells = trimmed.removePrefix("|").removeSuffix("|").split("|")
                     .map { it.trim() }
 
                 i += 2 // Skip header line and delimiter line
@@ -178,9 +178,8 @@ fun parseMarkdownBlocks(rawText: String): List<MarkdownBlock> {
                 val rows = mutableListOf<List<String>>()
                 while (i < lines.size) {
                     val rowLine = lines[i].trim()
-                    if (rowLine.startsWith("|") && rowLine.endsWith("|")) {
-                        val cells = rowLine.split("|")
-                            .drop(1).dropLast(1)
+                    if (rowLine.startsWith("|")) {
+                        val cells = rowLine.removePrefix("|").removeSuffix("|").split("|")
                             .map { it.trim() }
                         rows.add(cells)
                         i++
@@ -387,12 +386,12 @@ fun MarkdownTableView(
                         val headText = table.headers.getOrNull(idx) ?: "Col ${idx + 1}"
                         Box(
                             modifier = Modifier
-                                .width(if (colCount <= 3) 140.dp else 120.dp)
+                                .widthIn(min = if (colCount <= 3) 130.dp else 110.dp, max = 260.dp)
                                 .padding(horizontal = 8.dp),
                             contentAlignment = Alignment.CenterStart,
                         ) {
                             Text(
-                                text = parseInlineMarkdown(headText, primaryColor),
+                                text = parseInlineMarkdown(headText.ifBlank { " " }, primaryColor),
                                 style = MaterialTheme.typography.labelMedium.copy(
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -420,12 +419,12 @@ fun MarkdownTableView(
                             val cellText = row.getOrNull(colIdx) ?: ""
                             Box(
                                 modifier = Modifier
-                                    .width(if (colCount <= 3) 140.dp else 120.dp)
+                                    .widthIn(min = if (colCount <= 3) 130.dp else 110.dp, max = 260.dp)
                                     .padding(horizontal = 8.dp),
                                 contentAlignment = Alignment.CenterStart,
                             ) {
                                 Text(
-                                    text = parseInlineMarkdown(cellText, primaryColor),
+                                    text = parseInlineMarkdown(cellText.ifBlank { " " }, primaryColor),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurface,
                                 )

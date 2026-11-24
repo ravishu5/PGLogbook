@@ -121,4 +121,55 @@ class RichInputTest {
         val sig = buildSignatureStamp()
         assertTrue(sig.contains("Electronically Verified:"))
     }
+
+    @Test
+    fun testPresetTableMappings() {
+        val presets = listOf(
+            "Vitals Table",
+            "APGAR Score",
+            "Lab Investigations",
+            "Medications",
+            "Growth / Anthropometry",
+        )
+        presets.forEach { preset ->
+            val tableMd = when (preset) {
+                "Vitals Table" -> ClinicalReferenceTables.allTables.firstOrNull { it.title.contains("Vitals") }?.tableMarkdown
+                "APGAR Score" -> ClinicalReferenceTables.allTables.firstOrNull { it.title.contains("APGAR") }?.tableMarkdown
+                "Lab Investigations" -> ClinicalReferenceTables.allTables.firstOrNull { it.title.contains("Lab") }?.tableMarkdown
+                "Medications" -> ClinicalReferenceTables.allTables.firstOrNull { it.title.contains("Medication") }?.tableMarkdown
+                "Growth / Anthropometry" -> ClinicalReferenceTables.allTables.firstOrNull { it.title.contains("Anthropometry") }?.tableMarkdown
+                else -> null
+            }
+            assertTrue("Preset $preset should resolve to non-null table markdown", tableMd != null)
+            assertTrue("Preset $preset markdown should contain table delimiter", tableMd!!.contains("---"))
+        }
+    }
+
+    @Test
+    fun testTableParsingWithFlexibleWhitespaceAndEmptyCells() {
+        val raw = """
+            | Item | Quantity | Note |
+            | --- | --- | --- |
+            | Amikacin | 15 mg/kg | IV OD |
+            | | | |
+        """.trimIndent()
+
+        val blocks = parseMarkdownBlocks(raw)
+        assertEquals(1, blocks.size)
+        assertTrue(blocks[0] is MarkdownBlock.Table)
+
+        val table = blocks[0] as MarkdownBlock.Table
+        assertEquals(listOf("Item", "Quantity", "Note"), table.headers)
+        assertEquals(2, table.rows.size)
+        assertEquals(listOf("Amikacin", "15 mg/kg", "IV OD"), table.rows[0])
+        assertEquals(listOf("", "", ""), table.rows[1])
+    }
+
+    @Test
+    fun testInlineLinkAndAttachmentParsing() {
+        val text = "Refer to [NRP Guidelines](https://nrp.org) and 📎 **[Attachment: CXR Report]**."
+        val annotated = parseInlineMarkdown(text, Color.Blue)
+        assertTrue(annotated.text.contains("Refer to NRP Guidelines and 📎 [Attachment: CXR Report]."))
+        assertTrue(annotated.spanStyles.isNotEmpty())
+    }
 }

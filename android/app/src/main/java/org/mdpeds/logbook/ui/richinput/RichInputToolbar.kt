@@ -77,6 +77,7 @@ fun RichInputToolbar(
     onClearAll: () -> Unit,
     isPreviewMode: Boolean,
     onTogglePreview: () -> Unit,
+    onInsertTableRow: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
     var showFormatBar by remember { mutableStateOf(false) }
@@ -311,6 +312,24 @@ fun RichInputToolbar(
                     expanded = showMoreMenu,
                     onDismissRequest = { showMoreMenu = false },
                 ) {
+                    DropdownMenuItem(
+                        text = { Text("Insert Table") },
+                        leadingIcon = { Icon(Icons.Filled.TableChart, null) },
+                        onClick = {
+                            showMoreMenu = false
+                            showTableDialog = true
+                        },
+                    )
+                    if (onInsertTableRow != null) {
+                        DropdownMenuItem(
+                            text = { Text("Add Row to Current Table") },
+                            leadingIcon = { Icon(Icons.Filled.TableChart, null) },
+                            onClick = {
+                                showMoreMenu = false
+                                onInsertTableRow()
+                            },
+                        )
+                    }
                     DropdownMenuItem(
                         text = { Text("Clinical Scoring Tables (APGAR, Vitals, GCS)") },
                         leadingIcon = { Icon(Icons.Filled.CloudQueue, null) },

@@ -206,7 +206,14 @@ fun TableInsertDialog(
                     }
                 } else {
                     // Show description for selected preset
-                    val foundPreset = ClinicalReferenceTables.allTables.firstOrNull { it.title.contains(selectedPreset.replace(" Table", ""), ignoreCase = true) }
+                    val foundPreset = when (selectedPreset) {
+                        "Vitals Table" -> ClinicalReferenceTables.allTables.firstOrNull { it.title.contains("Vitals") }
+                        "APGAR Score" -> ClinicalReferenceTables.allTables.firstOrNull { it.title.contains("APGAR") }
+                        "Lab Investigations" -> ClinicalReferenceTables.allTables.firstOrNull { it.title.contains("Lab") }
+                        "Medications" -> ClinicalReferenceTables.allTables.firstOrNull { it.title.contains("Medication") }
+                        "Growth / Anthropometry" -> ClinicalReferenceTables.allTables.firstOrNull { it.title.contains("Anthropometry") }
+                        else -> null
+                    }
                     if (foundPreset != null) {
                         Text(foundPreset.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                     }
@@ -215,13 +222,13 @@ fun TableInsertDialog(
         },
         confirmButton = {
             Button(onClick = {
-                val tableMd = if (selectedPreset == "Custom Grid") {
-                    generateCustomTable(cols, rows)
-                } else {
-                    val found = ClinicalReferenceTables.allTables.firstOrNull {
-                        it.title.contains(selectedPreset.replace(" Table", ""), ignoreCase = true)
-                    }
-                    found?.tableMarkdown ?: generateCustomTable(cols, rows)
+                val tableMd = when (selectedPreset) {
+                    "Vitals Table" -> ClinicalReferenceTables.allTables.first { it.title.contains("Vitals") }.tableMarkdown
+                    "APGAR Score" -> ClinicalReferenceTables.allTables.first { it.title.contains("APGAR") }.tableMarkdown
+                    "Lab Investigations" -> ClinicalReferenceTables.allTables.first { it.title.contains("Lab") }.tableMarkdown
+                    "Medications" -> ClinicalReferenceTables.allTables.first { it.title.contains("Medication") }.tableMarkdown
+                    "Growth / Anthropometry" -> ClinicalReferenceTables.allTables.first { it.title.contains("Anthropometry") }.tableMarkdown
+                    else -> generateCustomTable(cols, rows)
                 }
                 onInsert("\n\n$tableMd\n\n")
             }) {
