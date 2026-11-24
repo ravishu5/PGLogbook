@@ -135,16 +135,12 @@
         },
         {
           "key": "presentation",
-          "label": "Case presentation (optional)",
+          "label": "Case presentation",
           "type": "SELECT",
           "owner": "STUDENT",
-          "required": false,
+          "required": true,
           "section": "Clinical",
           "options": [
-            {
-              "value": "NONE",
-              "label": "Not presented"
-            },
             {
               "value": "LONG_CASE",
               "label": "Long case"
@@ -152,8 +148,21 @@
             {
               "value": "SHORT_CASE",
               "label": "Short case"
+            },
+            {
+              "value": "NONE",
+              "label": "Not presented"
             }
           ]
+        },
+        {
+          "key": "presentation_detail",
+          "label": "Presentation detail",
+          "type": "MULTILINE",
+          "owner": "STUDENT",
+          "required": false,
+          "section": "Clinical",
+          "richText": true
         },
         {
           "key": "role",
@@ -170,7 +179,8 @@
           "type": "MULTILINE",
           "owner": "STUDENT",
           "required": true,
-          "section": "Learning"
+          "section": "Learning",
+          "richText": true
         },
         {
           "key": "faculty",

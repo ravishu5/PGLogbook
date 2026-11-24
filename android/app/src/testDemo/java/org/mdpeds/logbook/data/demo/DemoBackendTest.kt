@@ -50,6 +50,8 @@ class DemoBackendTest {
         "setting" to "WARD",
         "unit" to "Unit I",
         "diagnosis" to "Severe pneumonia",
+        "presentation" to "LONG_CASE",
+        "presentation_detail" to "Case presentation discussed in pediatric ward rounds.",
         "role" to "PS",
         "key_learning" to "Early oxygen therapy and close monitoring.",
         "faculty" to facultyId,

@@ -394,7 +394,7 @@ fun TextInput(
     enabled: Boolean = true,
     keyboardType: KeyboardType = KeyboardType.Text,
     minLines: Int = 1,
-    enableRichToolbar: Boolean = true,
+    enableRichToolbar: Boolean = false,
 ) {
     RichTextInput(
         label = label,

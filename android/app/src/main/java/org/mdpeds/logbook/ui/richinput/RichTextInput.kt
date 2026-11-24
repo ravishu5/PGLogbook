@@ -64,8 +64,26 @@ fun RichTextInput(
     enabled: Boolean = true,
     keyboardType: KeyboardType = KeyboardType.Text,
     minLines: Int = 1,
-    enableRichToolbar: Boolean = true,
+    enableRichToolbar: Boolean = false,
 ) {
+    if (!enableRichToolbar) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onChange,
+            label = { Text(label) },
+            singleLine = singleLine,
+            minLines = if (singleLine) 1 else minLines,
+            enabled = enabled,
+            isError = error != null,
+            supportingText = (error ?: supporting)?.let { { Text(it) } },
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            modifier = modifier
+                .fillMaxWidth()
+                .testTag("input:$label"),
+        )
+        return
+    }
+
     // Internal TextFieldValue state keeps track of text and cursor/selection
     var tfv by remember {
         mutableStateOf(TextFieldValue(text = value, selection = TextRange(value.length)))

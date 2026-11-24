@@ -117,7 +117,9 @@ internal class DemoSeed(private val b: DemoBackend) {
 
         fun case(daysAgo: Long, dx: String, setting: String, presentation: String, role: String, comps: String) = mapOf(
             "date" to day(daysAgo), "case_ref" to "IP/${24000 + daysAgo}", "age_sex" to "${daysAgo % 11 + 1} y / ${if (daysAgo % 2 == 0L) "M" else "F"}",
-            "setting" to setting, "unit" to "Unit I", "diagnosis" to dx, "presentation" to presentation, "role" to role,
+            "setting" to setting, "unit" to "Unit I", "diagnosis" to dx, "presentation" to presentation,
+            "presentation_detail" to if (presentation != "NONE") "Case presentation and clinical discussion conducted during posting." else "",
+            "role" to role,
             "key_learning" to "Structured approach to $dx and early recognition of complications.", "faculty" to f1, "competencies" to comps,
         )
         val c1 = save(s1, "CLINICAL_CASE", case(40, "Severe acute malnutrition with sepsis", "WARD", "LONG_CASE", "PS", "PG-PED-01,PG-PED-04"))

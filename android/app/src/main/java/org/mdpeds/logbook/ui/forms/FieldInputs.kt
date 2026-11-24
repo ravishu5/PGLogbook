@@ -46,6 +46,7 @@ private fun FieldDef.caption() = if (required) "$label *" else label
 @Composable
 fun FieldInput(f: FieldDef, value: String, onChange: (String) -> Unit, error: String?, ctx: FieldContext) {
     val help = f.help
+    val isRichText = f.richText || f.key == "presentation_detail" || f.key == "key_learning"
     when (f.type) {
         FieldType.DATE -> DateField(f.caption(), value, onChange, error = error, supporting = help)
         FieldType.SELECT -> {
@@ -58,7 +59,7 @@ fun FieldInput(f: FieldDef, value: String, onChange: (String) -> Unit, error: St
             if (ctx.facultyOptions.isEmpty()) Help("No faculty are assigned to you yet. Ask the HOD to assign your guide or unit faculty.")
             else if (help != null && error == null) Help(help)
         }
-        FieldType.MULTILINE -> TextInput(f.caption(), value, onChange, singleLine = false, minLines = 3, error = error, supporting = help)
+        FieldType.MULTILINE -> TextInput(f.caption(), value, onChange, singleLine = false, minLines = 3, error = error, supporting = help, enableRichToolbar = isRichText)
         FieldType.WORDS -> {
             val n = FormValidator.wordCount(value)
             val range = when {
@@ -67,13 +68,13 @@ fun FieldInput(f: FieldDef, value: String, onChange: (String) -> Unit, error: St
                 f.maxWords != null -> " (max ${f.maxWords} words)"
                 else -> ""
             }
-            TextInput(f.caption(), value, onChange, singleLine = false, minLines = 6, error = error, supporting = "$n words$range" + (help?.let { " · $it" } ?: ""))
+            TextInput(f.caption(), value, onChange, singleLine = false, minLines = 6, error = error, supporting = "$n words$range" + (help?.let { " · $it" } ?: ""), enableRichToolbar = isRichText)
         }
         FieldType.RATING_9 -> RatingInput(f, value, onChange, error)
         FieldType.BME -> ChoiceRow(f, value, bmeOptions.map { it.first to it.first }, onChange, error, caption = bmeOptions.joinToString(" · ") { "${it.first} = ${it.second}" })
         FieldType.BOOLEAN -> ChoiceRow(f, value, listOf("true" to "Yes", "false" to "No"), onChange, error, caption = help)
         FieldType.COMPETENCIES -> CompetencyInput(f, value, onChange, error, ctx)
-        else -> TextInput(f.caption(), value, onChange, error = error, supporting = help)
+        else -> TextInput(f.caption(), value, onChange, error = error, supporting = help, enableRichToolbar = isRichText)
     }
 }
 

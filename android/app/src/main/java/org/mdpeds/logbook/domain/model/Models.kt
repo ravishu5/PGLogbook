@@ -164,6 +164,7 @@ data class FieldDef(
     val minWords: Int? = null,
     val maxWords: Int? = null,
     val group: String? = null,
+    val richText: Boolean = false,
 )
 
 object TemplateCategory {

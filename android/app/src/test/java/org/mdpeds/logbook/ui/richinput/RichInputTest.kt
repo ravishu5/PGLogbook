@@ -172,4 +172,28 @@ class RichInputTest {
         assertTrue(annotated.text.contains("Refer to NRP Guidelines and 📎 [Attachment: CXR Report]."))
         assertTrue(annotated.spanStyles.isNotEmpty())
     }
+
+    @Test
+    fun testCasePresentationMandatoryAndRichFields() {
+        val jsonText = java.io.File("../../reference-data/templates.json").readText()
+        val ref = org.mdpeds.logbook.domain.logic.ReferenceData.parse(jsonText, """{"competencies":[]}""", """{"exposure":[],"procedures":[]}""", """{"documents":[]}""")
+        val clinicalCase = ref.templates.first { it.code == "CLINICAL_CASE" }
+        
+        // 1. Verify Case presentation is mandatory
+        val presField = clinicalCase.fields.first { it.key == "presentation" }
+        assertTrue("Case presentation must be mandatory (required=true)", presField.required)
+        assertEquals("Case presentation", presField.label)
+
+        // 2. Verify presentation_detail exists right below presentation
+        val presIndex = clinicalCase.fields.indexOfFirst { it.key == "presentation" }
+        val detailField = clinicalCase.fields[presIndex + 1]
+        assertEquals("presentation_detail", detailField.key)
+        assertEquals("Presentation detail", detailField.label)
+        assertEquals("MULTILINE", detailField.type)
+        assertTrue("presentation_detail should be richText", detailField.richText)
+
+        // 3. Verify key_learning is richText
+        val keyLearning = clinicalCase.fields.first { it.key == "key_learning" }
+        assertTrue("key_learning should be richText", keyLearning.richText)
+    }
 }
