@@ -37,6 +37,8 @@ import org.mdpeds.logbook.domain.model.FieldType
 import org.mdpeds.logbook.ui.components.DateField
 import org.mdpeds.logbook.ui.components.DropdownField
 import org.mdpeds.logbook.ui.components.TextInput
+import org.mdpeds.logbook.ui.richinput.RichMarkdownViewer
+import org.mdpeds.logbook.ui.richinput.hasMarkdown
 
 private fun FieldDef.caption() = if (required) "$label *" else label
 
@@ -188,6 +190,11 @@ private fun CompetencyInput(f: FieldDef, value: String, onChange: (String) -> Un
 fun FieldValue(f: FieldDef, value: String?, ctx: FieldContext) {
     Column(Modifier.fillMaxWidth().padding(vertical = 2.dp)) {
         Text(f.label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Text(displayValue(f, value, ctx), style = MaterialTheme.typography.bodyLarge)
+        val formatted = displayValue(f, value, ctx)
+        if (hasMarkdown(formatted)) {
+            RichMarkdownViewer(text = formatted, modifier = Modifier.padding(top = 2.dp))
+        } else {
+            Text(formatted, style = MaterialTheme.typography.bodyLarge)
+        }
     }
 }

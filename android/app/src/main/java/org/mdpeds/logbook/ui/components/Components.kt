@@ -58,6 +58,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import org.mdpeds.logbook.ui.richinput.RichTextInput
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
@@ -393,18 +394,20 @@ fun TextInput(
     enabled: Boolean = true,
     keyboardType: KeyboardType = KeyboardType.Text,
     minLines: Int = 1,
+    enableRichToolbar: Boolean = true,
 ) {
-    OutlinedTextField(
+    RichTextInput(
+        label = label,
         value = value,
-        onValueChange = onChange,
-        label = { Text(label) },
+        onChange = onChange,
+        modifier = modifier,
         singleLine = singleLine,
-        minLines = if (singleLine) 1 else minLines,
+        error = error,
+        supporting = supporting,
         enabled = enabled,
-        isError = error != null,
-        supportingText = (error ?: supporting)?.let { { Text(it) } },
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-        modifier = modifier.fillMaxWidth().testTag("input:$label"),
+        keyboardType = keyboardType,
+        minLines = minLines,
+        enableRichToolbar = enableRichToolbar,
     )
 }
 
@@ -428,12 +431,12 @@ fun ReasonDialog(
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (message != null) Text(message, style = MaterialTheme.typography.bodyMedium)
-                OutlinedTextField(
+                TextInput(
+                    label = label,
                     value = text,
-                    onValueChange = { text = it },
-                    label = { Text(label) },
+                    onChange = { text = it },
+                    singleLine = false,
                     minLines = 3,
-                    modifier = Modifier.fillMaxWidth().testTag("reason"),
                 )
             }
         },
