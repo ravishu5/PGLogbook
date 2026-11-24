@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,11 +15,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.FormatListBulleted
@@ -27,6 +28,7 @@ import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CloudQueue
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Draw
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.FormatBold
 import androidx.compose.material.icons.filled.FormatItalic
@@ -64,9 +66,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * Rich Formatting Toolbar matching Gmail / Google Workspace design.
- * Features: Aa (Formatting), Sparkle (Clinical Templates), Paperclip (Attachment),
- * Link, Emoji, Drive (Tables), Image, Lock (Timestamp), Pen (Signature), More (⋮).
+ * Rich Formatting Toolbar matching Gmail / Google Workspace compose toolbar.
+ * Primary icons:
+ * [Aa]  [✨ Sparkle Pencil]  [📎 Paperclip]  [🔗 Link]  [😊 Emoji]  |  [▦ Table]  [👁 Preview]  [⋮]
  */
 @Composable
 fun RichInputToolbar(
@@ -87,269 +89,275 @@ fun RichInputToolbar(
     var showImageDialog by remember { mutableStateOf(false) }
     var showMoreMenu by remember { mutableStateOf(false) }
 
-    val scrollState = rememberScrollState()
-    val activeColor = MaterialTheme.colorScheme.primaryContainer
-    val onActiveColor = MaterialTheme.colorScheme.onPrimaryContainer
+    val iconTint = MaterialTheme.colorScheme.onSurfaceVariant
+    val primaryColor = MaterialTheme.colorScheme.primary
 
-    Surface(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.25f)),
     ) {
-        Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)) {
-            // Main icon toolbar row
+        // Expandable Text Formatting Sub-bar (toggled by Aa button)
+        AnimatedVisibility(
+            visible = showFormatBar,
+            enter = expandVertically() + fadeIn(),
+            exit = shrinkVertically() + fadeOut(),
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .horizontalScroll(scrollState),
+                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f))
+                    .padding(horizontal = 6.dp, vertical = 2.dp)
+                    .horizontalScroll(rememberScrollState()),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(2.dp),
             ) {
-                // 1. Aa (Typography & Formatting)
-                Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(if (showFormatBar) activeColor else Color.Transparent),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    IconButton(onClick = { showFormatBar = !showFormatBar }) {
-                        Text(
-                            text = "Aa",
-                            fontSize = 17.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = if (showFormatBar) onActiveColor else MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
+                // Bold
+                IconButton(onClick = { onWrapSelection("**", "**", "bold text") }, modifier = Modifier.size(34.dp)) {
+                    Icon(Icons.Filled.FormatBold, "Bold", modifier = Modifier.size(17.dp))
                 }
-
-                // 2. Sparkle (AI / Clinical note templates)
-                IconButton(
-                    onClick = { showTemplatesDialog = true },
-                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-                ) {
-                    Icon(Icons.Filled.AutoAwesome, contentDescription = "Clinical templates & notes")
+                // Italic
+                IconButton(onClick = { onWrapSelection("*", "*", "italic text") }, modifier = Modifier.size(34.dp)) {
+                    Icon(Icons.Filled.FormatItalic, "Italic", modifier = Modifier.size(17.dp))
                 }
-
-                // 3. Paperclip (Attachment reference)
-                IconButton(
-                    onClick = { showAttachmentDialog = true },
-                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-                ) {
-                    Icon(Icons.Filled.AttachFile, contentDescription = "Insert attachment reference")
+                // Strikethrough
+                IconButton(onClick = { onWrapSelection("~~", "~~", "strikethrough") }, modifier = Modifier.size(34.dp)) {
+                    Icon(Icons.Filled.FormatStrikethrough, "Strikethrough", modifier = Modifier.size(17.dp))
                 }
-
-                // 4. Link
-                IconButton(
-                    onClick = { showLinkDialog = true },
-                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-                ) {
-                    Icon(Icons.Filled.Link, contentDescription = "Insert link")
+                // Heading
+                IconButton(onClick = { onInsertText("\n### Heading\n") }, modifier = Modifier.size(34.dp)) {
+                    Icon(Icons.Filled.FormatSize, "Heading", modifier = Modifier.size(17.dp))
                 }
-
-                // 5. Emoji
-                IconButton(
-                    onClick = { showEmojiDialog = true },
-                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-                ) {
-                    Icon(Icons.Filled.SentimentSatisfiedAlt, contentDescription = "Insert clinical emoji or symbol")
+                // Bullet List
+                IconButton(onClick = { onInsertText("\n- ") }, modifier = Modifier.size(34.dp)) {
+                    Icon(Icons.AutoMirrored.Filled.FormatListBulleted, "Bullet list", modifier = Modifier.size(17.dp))
                 }
-
-                // 6. Drive / Clinical Reference Tables
-                IconButton(
-                    onClick = { showDriveTablesDialog = true },
-                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-                ) {
-                    Icon(Icons.Filled.CloudQueue, contentDescription = "Clinical reference scoring tables")
+                // Numbered List
+                IconButton(onClick = { onInsertText("\n1. ") }, modifier = Modifier.size(34.dp)) {
+                    Icon(Icons.Filled.FormatListNumbered, "Numbered list", modifier = Modifier.size(17.dp))
                 }
-
-                // 7. Photo / Image
-                IconButton(
-                    onClick = { showImageDialog = true },
-                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-                ) {
-                    Icon(Icons.Filled.Image, contentDescription = "Insert clinical image")
+                // Blockquote
+                IconButton(onClick = { onInsertText("\n> ") }, modifier = Modifier.size(34.dp)) {
+                    Icon(Icons.Filled.FormatQuote, "Quote", modifier = Modifier.size(17.dp))
                 }
-
-                // 8. Lock / Authenticated timestamp
-                IconButton(
-                    onClick = { onInsertText(buildTimestampString()) },
-                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-                ) {
-                    Icon(Icons.Filled.LockClock, contentDescription = "Insert verified timestamp")
+                // Code
+                IconButton(onClick = { onWrapSelection("`", "`", "code") }, modifier = Modifier.size(34.dp)) {
+                    Icon(Icons.Filled.Code, "Code", modifier = Modifier.size(17.dp))
                 }
-
-                // 9. Pen / Clinician signature stamp
-                IconButton(
-                    onClick = { onInsertText(buildSignatureStamp()) },
-                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-                ) {
-                    Icon(Icons.Filled.Draw, contentDescription = "Insert clinician sign-off stamp")
+                // Horizontal Divider
+                IconButton(onClick = { onInsertText("\n\n---\n\n") }, modifier = Modifier.size(34.dp)) {
+                    Icon(Icons.Filled.HorizontalRule, "Horizontal line", modifier = Modifier.size(17.dp))
                 }
+            }
+        }
 
-                // Direct Table Insert shortcut button
-                IconButton(
-                    onClick = { showTableDialog = true },
-                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.primary),
-                ) {
-                    Icon(Icons.Filled.TableChart, contentDescription = "Insert Table")
-                }
+        // Main Toolbar Row matching the screenshot exactly
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 6.dp, vertical = 4.dp)
+                .horizontalScroll(rememberScrollState()),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            // 1. Aa (Formatting button)
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(if (showFormatBar) MaterialTheme.colorScheme.primaryContainer else Color.Transparent)
+                    .clickable { showFormatBar = !showFormatBar },
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = "Aa",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = if (showFormatBar) MaterialTheme.colorScheme.onPrimaryContainer else iconTint,
+                )
+            }
 
-                // Live Preview / Edit Toggle
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(if (isPreviewMode) activeColor else Color.Transparent),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    IconButton(onClick = onTogglePreview) {
-                        Icon(
-                            imageVector = if (isPreviewMode) Icons.Filled.EditNote else Icons.Filled.Preview,
-                            contentDescription = if (isPreviewMode) "Edit text" else "Preview formatted text and tables",
-                            tint = if (isPreviewMode) onActiveColor else MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.size(20.dp),
-                        )
-                    }
-                }
-
-                // 10. More (⋮)
-                Box {
-                    IconButton(onClick = { showMoreMenu = true }) {
-                        Icon(Icons.Filled.MoreVert, contentDescription = "More formatting options")
-                    }
-                    DropdownMenu(
-                        expanded = showMoreMenu,
-                        onDismissRequest = { showMoreMenu = false },
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text("Insert Table") },
-                            leadingIcon = { Icon(Icons.Filled.TableChart, null) },
-                            onClick = {
-                                showMoreMenu = false
-                                showTableDialog = true
-                            },
-                        )
-                        DropdownMenuItem(
-                            text = { Text("Insert Horizontal Line") },
-                            leadingIcon = { Icon(Icons.Filled.HorizontalRule, null) },
-                            onClick = {
-                                showMoreMenu = false
-                                onInsertText("\n\n---\n\n")
-                            },
-                        )
-                        DropdownMenuItem(
-                            text = { Text(if (isPreviewMode) "Switch to Editor" else "Preview Rendered Tables & Text") },
-                            leadingIcon = { Icon(if (isPreviewMode) Icons.Filled.EditNote else Icons.Filled.Preview, null) },
-                            onClick = {
-                                showMoreMenu = false
-                                onTogglePreview()
-                            },
-                        )
-                        DropdownMenuItem(
-                            text = { Text("Clear All Text") },
-                            onClick = {
-                                showMoreMenu = false
-                                onClearAll()
-                            },
-                        )
-                    }
+            // 2. Sparkle Pencil (with Google-style light blue rounded square #D3E3FD)
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color(0xFFD3E3FD))
+                    .clickable { showTemplatesDialog = true },
+                contentAlignment = Alignment.Center,
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        imageVector = Icons.Filled.Edit,
+                        contentDescription = "AI & Clinical Note Templates",
+                        tint = Color(0xFF041E49),
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.AutoAwesome,
+                        contentDescription = null,
+                        tint = Color(0xFF041E49),
+                        modifier = Modifier
+                            .size(10.dp)
+                            .align(Alignment.TopStart)
+                            .offset(x = (-3).dp, y = (-3).dp),
+                    )
                 }
             }
 
-            // Sub-row: Text formatting options (toggled by Aa button)
-            AnimatedVisibility(
-                visible = showFormatBar,
-                enter = expandVertically() + fadeIn(),
-                exit = shrinkVertically() + fadeOut(),
+            // 3. Paperclip (Attachment)
+            IconButton(
+                onClick = { showAttachmentDialog = true },
+                modifier = Modifier.size(36.dp),
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 4.dp, bottom = 2.dp)
-                        .horizontalScroll(rememberScrollState()),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(2.dp),
+                Icon(
+                    imageVector = Icons.Filled.AttachFile,
+                    contentDescription = "Insert attachment reference",
+                    tint = iconTint,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+
+            // 4. Link
+            IconButton(
+                onClick = { showLinkDialog = true },
+                modifier = Modifier.size(36.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Link,
+                    contentDescription = "Insert link",
+                    tint = iconTint,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+
+            // 5. Smiley Emoji
+            IconButton(
+                onClick = { showEmojiDialog = true },
+                modifier = Modifier.size(36.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.SentimentSatisfiedAlt,
+                    contentDescription = "Insert clinical symbol or emoji",
+                    tint = iconTint,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+
+            // Vertical divider
+            Box(
+                modifier = Modifier
+                    .width(1.dp)
+                    .height(20.dp)
+                    .background(MaterialTheme.colorScheme.outlineVariant),
+            )
+
+            // 6. Prominent Table Button
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(primaryColor.copy(alpha = 0.12f))
+                    .clickable { showTableDialog = true }
+                    .padding(horizontal = 8.dp, vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.TableChart,
+                    contentDescription = "Insert Table",
+                    tint = primaryColor,
+                    modifier = Modifier.size(18.dp),
+                )
+                Spacer(Modifier.width(4.dp))
+                Text(
+                    text = "Table",
+                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold, color = primaryColor),
+                )
+            }
+
+            // 7. Live Preview / Edit Toggle
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(if (isPreviewMode) MaterialTheme.colorScheme.primaryContainer else Color.Transparent)
+                    .clickable { onTogglePreview() }
+                    .padding(horizontal = 8.dp, vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    imageVector = if (isPreviewMode) Icons.Filled.EditNote else Icons.Filled.Preview,
+                    contentDescription = if (isPreviewMode) "Edit Mode" else "Preview Mode",
+                    tint = if (isPreviewMode) MaterialTheme.colorScheme.onPrimaryContainer else iconTint,
+                    modifier = Modifier.size(18.dp),
+                )
+                Spacer(Modifier.width(4.dp))
+                Text(
+                    text = if (isPreviewMode) "Edit" else "Preview",
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        color = if (isPreviewMode) MaterialTheme.colorScheme.onPrimaryContainer else iconTint,
+                        fontWeight = FontWeight.Medium,
+                    ),
+                )
+            }
+
+            // 8. More options (⋮)
+            Box {
+                IconButton(
+                    onClick = { showMoreMenu = true },
+                    modifier = Modifier.size(36.dp),
                 ) {
-                    // Bold
-                    IconButton(
-                        onClick = { onWrapSelection("**", "**", "bold text") },
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(Icons.Filled.FormatBold, "Bold", modifier = Modifier.size(18.dp))
-                    }
-
-                    // Italic
-                    IconButton(
-                        onClick = { onWrapSelection("*", "*", "italic text") },
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(Icons.Filled.FormatItalic, "Italic", modifier = Modifier.size(18.dp))
-                    }
-
-                    // Strikethrough
-                    IconButton(
-                        onClick = { onWrapSelection("~~", "~~", "strikethrough text") },
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(Icons.Filled.FormatStrikethrough, "Strikethrough", modifier = Modifier.size(18.dp))
-                    }
-
-                    // Headings
-                    IconButton(
-                        onClick = { onInsertText("\n### Heading\n") },
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(Icons.Filled.FormatSize, "Heading", modifier = Modifier.size(18.dp))
-                    }
-
-                    // Bullet List
-                    IconButton(
-                        onClick = { onInsertText("\n- ") },
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(Icons.AutoMirrored.Filled.FormatListBulleted, "Bullet list", modifier = Modifier.size(18.dp))
-                    }
-
-                    // Numbered List
-                    IconButton(
-                        onClick = { onInsertText("\n1. ") },
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(Icons.Filled.FormatListNumbered, "Numbered list", modifier = Modifier.size(18.dp))
-                    }
-
-                    // Blockquote
-                    IconButton(
-                        onClick = { onInsertText("\n> ") },
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(Icons.Filled.FormatQuote, "Quote", modifier = Modifier.size(18.dp))
-                    }
-
-                    // Monospace Code
-                    IconButton(
-                        onClick = { onWrapSelection("`", "`", "code") },
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(Icons.Filled.Code, "Code", modifier = Modifier.size(18.dp))
-                    }
-
-                    // Table inside format bar
-                    IconButton(
-                        onClick = { showTableDialog = true },
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(Icons.Filled.TableChart, "Insert Table", modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
-                    }
-
-                    // Divider
-                    IconButton(
-                        onClick = { onInsertText("\n\n---\n\n") },
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(Icons.Filled.HorizontalRule, "Horizontal Line", modifier = Modifier.size(18.dp))
-                    }
+                    Icon(Icons.Filled.MoreVert, "More options", tint = iconTint, modifier = Modifier.size(20.dp))
+                }
+                DropdownMenu(
+                    expanded = showMoreMenu,
+                    onDismissRequest = { showMoreMenu = false },
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Clinical Scoring Tables (APGAR, Vitals, GCS)") },
+                        leadingIcon = { Icon(Icons.Filled.CloudQueue, null) },
+                        onClick = {
+                            showMoreMenu = false
+                            showDriveTablesDialog = true
+                        },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Insert Clinical Image") },
+                        leadingIcon = { Icon(Icons.Filled.Image, null) },
+                        onClick = {
+                            showMoreMenu = false
+                            showImageDialog = true
+                        },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Insert Authenticated Timestamp") },
+                        leadingIcon = { Icon(Icons.Filled.LockClock, null) },
+                        onClick = {
+                            showMoreMenu = false
+                            onInsertText(buildTimestampString())
+                        },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Insert Clinician Signature Stamp") },
+                        leadingIcon = { Icon(Icons.Filled.Draw, null) },
+                        onClick = {
+                            showMoreMenu = false
+                            onInsertText(buildSignatureStamp())
+                        },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Insert Horizontal Line (---)") },
+                        leadingIcon = { Icon(Icons.Filled.HorizontalRule, null) },
+                        onClick = {
+                            showMoreMenu = false
+                            onInsertText("\n\n---\n\n")
+                        },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Clear All Text") },
+                        onClick = {
+                            showMoreMenu = false
+                            onClearAll()
+                        },
+                    )
                 }
             }
         }

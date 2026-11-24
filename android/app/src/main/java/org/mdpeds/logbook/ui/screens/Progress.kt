@@ -16,6 +16,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import org.mdpeds.logbook.ui.components.TextInput
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -260,10 +261,12 @@ private fun SignoffDialog(d: SignoffsData, r: SignoffRow, onDismiss: () -> Unit,
                 val staffCanAct = d.canSignoff && r.status != SignoffStatus.APPROVED
                 val hodRevoke = d.canRevoke && r.status == SignoffStatus.APPROVED
                 if (studentCanRequest || staffCanAct || hodRevoke) {
-                    OutlinedTextField(
-                        comment, { comment = it },
-                        label = { Text(if (studentCanRequest) "Note to faculty (optional)" else if (hodRevoke) "Reason for revoking" else "Comment") },
-                        modifier = Modifier.fillMaxWidth(), minLines = 2,
+                    TextInput(
+                        label = if (studentCanRequest) "Note to faculty (optional)" else if (hodRevoke) "Reason for revoking" else "Comment",
+                        value = comment,
+                        onChange = { comment = it },
+                        singleLine = false,
+                        minLines = 2,
                     )
                 }
                 if (studentCanRequest) {
